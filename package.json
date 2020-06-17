@@ -1,0 +1,25 @@
+{
+  "name": "expresswithmysql",
+  "version": "1.0.0",
+  "description": "Express With MySQL",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec app.js --daelay 2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parkchoongho/ExpressWithMySQL.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/parkchoongho/ExpressWithMySQL/issues"
+  },
+  "homepage": "https://github.com/parkchoongho/ExpressWithMySQL#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
