@@ -4,7 +4,7 @@
   "description": "Express With MySQL",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec app.js --daelay 2"
+    "start": "nodemon --exec babel-node app.js --daelay 2"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/parkchoongho/ExpressWithMySQL#readme",
   "dependencies": {
+    "@babel/core": "^7.10.2",
+    "@babel/node": "^7.10.1",
+    "@babel/preset-env": "^7.10.2",
     "express": "^4.17.1"
   },
   "devDependencies": {
