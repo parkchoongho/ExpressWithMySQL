@@ -8,11 +8,14 @@ export const findAll = (req, res) => {
   connection.connect();
 
   let result;
-  connection.query("SELECT * FROM CARD", (error, rows, fields) => {
-    if (error) throw error;
-    console.log(rows);
-    result = rows;
-  });
+  connection.query(
+    `SELECT * FROM Card WHERE chapter=(SELECT chapid FROM Chapter WHERE name="${req.query.chapter}")`,
+    (error, rows, fields) => {
+      if (error) throw error;
+      console.log(rows);
+      result = rows;
+    }
+  );
 
   connection.end();
 
