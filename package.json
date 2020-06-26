@@ -4,7 +4,7 @@
   "description": "Express With MySQL",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node app.js --delay 2"
+    "start": "nodemon --exec ts-node app.ts --delay 2"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
     "mysql": "^2.18.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "ts-node": "^8.10.2"
   }
 }
