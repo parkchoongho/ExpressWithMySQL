@@ -1,0 +1,51 @@
+name: Release Tag
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0 # 전체 히스토리를 가져오기 위해 필요
+
+      - name: Get latest tag
+        id: get-latest-tag
+        run: |
+          git fetch --tags
+          latest_tag=$(git describe --tags --abbrev=0 2>/dev/null || echo "v0.0.0")
+          echo "LATEST_TAG=${latest_tag}" >> $GITHUB_ENV
+
+      - name: Generate release notes
+        id: generate-notes
+        run: |
+          # staging 브랜치와 마지막 태그 사이의 커밋 로그를 추출
+          changelog=$(git log ${{ env.LATEST_TAG }}..staging --pretty=format:"* %s (%h)" --no-merges)
+          # 멀티라인 문자열을 GitHub Actions 환경 변수로 저장
+          echo "CHANGELOG<<EOF" >> $GITHUB_ENV
+          echo "$changelog" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: Get version
+        id: get-version
+        run: |
+          version=$(echo '${{ github.event.head_commit.message }}' | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}')
+          echo "VERSION=v${version}" >> $GITHUB_ENV
+
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.VERSION }}
+          release_name: Release ${{ env.VERSION }}
+          body: |
+            ## What's Changed
+            ${{ env.CHANGELOG }}
+
+            Full Changelog: (${{ github.event.repository.html_url }}/compare/${{ env.LATEST_TAG }}...${{ env.VERSION }})
+          draft: false
+          prerelease: false
