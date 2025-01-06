@@ -19,6 +19,7 @@ export const findAll = (req, res) => {
 
   connection.end();
   console.log("Test");
+  console.log("result");
 
   res.send(result);
 };
