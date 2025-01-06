@@ -18,6 +18,7 @@ export const findAll = (req, res) => {
   );
 
   connection.end();
+  console.log("Test");
 
   res.send(result);
 };
